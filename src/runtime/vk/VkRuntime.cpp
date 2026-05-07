@@ -73,7 +73,7 @@ namespace vuk {
 		// PFN loading
 		// if the user passes in PFNs, those will be used, always
 		auto missing_pfn = check_pfns();
-		if (missing_pfn != nullptr) {
+		if (missing_pfn == nullptr) {
 			return { vuk::expected_value };
 		}
 		// we don't have all the PFNs, so we will load them if this is allowed
