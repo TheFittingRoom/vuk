@@ -5,6 +5,7 @@
 #include "fmt/format.h"
 #include "vuk/Exception.hpp"
 #include "vuk/ImageAttachment.hpp"
+#include "vuk/Result.hpp"
 #include "vuk/runtime/Cache.hpp"
 #include "vuk/runtime/vk/Allocator.hpp"
 #include "vuk/runtime/vk/DeviceVkResource.hpp"
@@ -74,19 +75,20 @@ namespace vuk {
 		auto missing_pfn = check_pfns();
 		if (missing_pfn != nullptr) {
 			return { vuk::expected_value };
-			// we don't have all the PFNs, so we will load them if this is allowed
-			if (vkGetInstanceProcAddr && allow_dynamic_loading_of_vk_function_pointers) {
-				load_pfns_dynamic(instance, device, *this);
-				missing_pfn = check_pfns();
-				if (missing_pfn != nullptr) {
-					return { vuk::expected_error,
-						       vuk::RequiredPFNMissingException{
-						           fmt::format("Vulkan PFN {} is required, but was not provided nor could dynamic loading load it", missing_pfn) } };
-				};
-			}
+		}
+		// we don't have all the PFNs, so we will load them if this is allowed
+		if (vkGetInstanceProcAddr && allow_dynamic_loading_of_vk_function_pointers) {
+			load_pfns_dynamic(instance, device, *this);
+			missing_pfn = check_pfns();
+			if (missing_pfn != nullptr) {
+				return { vuk::expected_error,
+					       vuk::RequiredPFNMissingException{
+					           fmt::format("Vulkan PFN {} is required, but was not provided nor could dynamic loading load it", missing_pfn) } };
+			};
 		} else {
 			return { vuk::expected_error, vuk::RequiredPFNMissingException{ "A Vulkan PFN is required, but was not provided and dynamic loading was not allowed." } };
 		}
+
 		return { vuk::expected_value };
 	}
 
