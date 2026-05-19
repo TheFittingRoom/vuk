@@ -337,13 +337,13 @@ namespace vuk {
 			} else if (ref.type()->size == 2) {
 				uint16_t t;
 				memcpy(&t, res->value, 2);
-				if (t == USHRT_MAX) {
+				if (t == std::numeric_limits<std::uint16_t>::max()) {
 					return;
 				}
 			} else if (ref.type()->size == 1) {
 				uint8_t t;
 				memcpy(&t, res->value, 1);
-				if (t == UCHAR_MAX) {
+				if (t == std::numeric_limits<std::uint8_t>::max()) {
 					return;
 				}
 			} else {
