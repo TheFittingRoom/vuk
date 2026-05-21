@@ -103,11 +103,6 @@ FetchContent_Declare(
   GIT_TAG 5b4ad3bd3dc3e1593a7e95cb3843a87b5ae21000
 )
 FetchContent_Declare(
-  function2
-  GIT_REPOSITORY https://github.com/Naios/function2.git
-  GIT_TAG 43fc0ca473ecb081918709bd7d524d84c2ff8dce
-)
-FetchContent_Declare(
   concurrentqueue
   GIT_REPOSITORY https://github.com/cameron314/concurrentqueue
   GIT_TAG 0d54c6794510018f42b1b987f55c313dd1358320
@@ -156,7 +151,6 @@ FetchContent_MakeAvailable(
   plf_colony
   small_vector
   concurrentqueue
-  function2
   vma
   spirv-cross
 )
@@ -398,7 +392,6 @@ endif()
 
 target_link_libraries(vuk
   PUBLIC
-  function2
   plf_colony
   PRIVATE
   spirv-cross-core
@@ -408,6 +401,9 @@ target_link_libraries(vuk
   gch::small_vector
   concurrentqueue
 )
+target_include_directories(vuk
+	PUBLIC
+	ext)
 
 if(VUK_LINK_TO_LOADER)
     if(VUK_USE_FETCHED_VULKAN_HEADERS)
