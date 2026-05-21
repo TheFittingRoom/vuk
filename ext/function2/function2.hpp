@@ -417,7 +417,7 @@ namespace fu2 {
 				};
 
 				/// See opcode::op_fetch_empty
-				static FU2_DETAIL_CXX14_CONSTEXPR void write_empty(data_accessor* accessor, bool empty) noexcept {
+				inline FU2_DETAIL_CXX14_CONSTEXPR void write_empty(data_accessor* accessor, bool empty) noexcept {
 					accessor->inplace_storage_ = std::size_t(empty);
 				}
 
